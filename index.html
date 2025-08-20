@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnWise - Smart Learning Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .dashboard-card {
+            transition: all 0.3s ease;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+        .chat-container {
+            height: calc(100vh - 240px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-blue-600">LearnWise</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="notificationBtn" class="p-2 rounded-full hover:bg-gray-100">
+                        <i class="bi bi-bell text-xl"></i>
+                    </button>
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
+                             alt="Profile" 
+                             class="h-8 w-8 rounded-full cursor-pointer" 
+                             id="profileDropdown">
+                        <div id="profileMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Course Progress -->
+            <div class="col-span-2">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-semibold mb-4">Current Courses</h2>
+                    <div class="space-y-4">
+                        <div class="border rounded-lg p-4">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-medium">Web Development Fundamentals</h3>
+                                <span class="text-sm text-blue-600">75% Complete</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-medium">Python Programming</h3>
+                                <span class="text-sm text-blue-600">45% Complete</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 45%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Mentor -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold mb-4">AI Mentor</h2>
+                    <div class="chat-container overflow-y-auto">
+                        <div id="chatMessages" class="space-y-4"></div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex space-x-2">
+                            <input type="text" id="userInput" placeholder="Ask your question..." 
+                                   class="flex-1 rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <button onclick="sendMessage()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity & Upcoming Tests -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold mb-4">Recent Activity</h2>
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-blue-100 p-2 rounded-full">
+                            <i class="bi bi-play-circle text-blue-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium">Completed JavaScript Basics</p>
+                            <p class="text-sm text-gray-500">2 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-green-100 p-2 rounded-full">
+                            <i class="bi bi-check-circle text-green-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium">Passed HTML Quiz</p>
+                            <p class="text-sm text-gray-500">Yesterday</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold mb-4">Upcoming Tests</h2>
+                <div class="space-y-4">
+                    <div class="border rounded-lg p-4">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="font-medium">CSS Advanced Concepts</h3>
+                                <p class="text-sm text-gray-500">Duration: 1 hour</p>
+                            </div>
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                Start Test
+                            </button>
+                        </div>
+                    </div>
+                    <div class="border rounded-lg p-4">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="font-medium">JavaScript DOM</h3>
+                                <p class="text-sm text-gray-500">Duration: 45 minutes</p>
+                            </div>
+                            <button class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg">
+                                Coming Soon
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Profile Dropdown
+        const profileDropdown = document.getElementById('profileDropdown');
+        const profileMenu = document.getElementById('profileMenu');
+        
+        profileDropdown.addEventListener('click', () => {
+            profileMenu.classList.toggle('hidden');
+        });
+
+        // AI Mentor Chat
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
+            messageDiv.innerHTML = `
+                <div class="max-w-[70%] ${isUser ? 'bg-blue-600 text-white' : 'bg-gray-100'} rounded-lg px-4 py-2">
+                    <p class="text-sm">${message}</p>
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                userInput.value = '';
+                
+                // Simulate AI response
+                setTimeout(() => {
+                    const responses = [
+                        "I'll help you understand that concept better!",
+                        "Here's a summary of the chapter...",
+                        "Let me prepare some practice questions for you."
+                    ];
+                    addMessage(responses[Math.floor(Math.random() * responses.length)]);
+                }, 1000);
+            }
+        }
+
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Initial welcome message
+        addMessage("Hi! I'm your AI mentor. How can I help you today?");
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
